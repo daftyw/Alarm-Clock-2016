@@ -17,7 +17,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AlarmActivity" >
+        <activity android:name=".AlarmActivity"
+                  android:label="@string/alarm_clock" >
+
+        </activity>
+
+        <activity android:name=".AlarmEditActivity"
+                  android:label="@string/edit_alarm_clock"
+                  android:parentActivityName=".AlarmListActivity">
+
         </activity>
 
     </application>

@@ -27,7 +27,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
         sql.append(" " + MyAlarm.Cols.ALARM_ID + ", ");
         sql.append(" " + MyAlarm.Cols.NAME + ", ");
         sql.append(" " + MyAlarm.Cols.HOUR + ", ");
-        sql.append(" " + MyAlarm.Cols.MINUTE + ", ");
+        sql.append(" " + MyAlarm.Cols.MINUTE + " ");
         sql.append(" ) ");
 
         // create table

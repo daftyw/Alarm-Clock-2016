@@ -41,7 +41,7 @@ public class AlarmDatabase {
     }
 
     public static AlarmDatabase get(Context context) {
-        if( instance != null ) {
+        if( instance == null ) {
             instance = new AlarmDatabase(context);
         }
         return instance;
@@ -60,12 +60,31 @@ public class AlarmDatabase {
         mDatabase.insert(Tables.MyAlarm.NAME, null, getContentValues(alarm));
     }
 
-    public List<Alarm> getList() {
-        return queryAlarm();
+    public void saveOrUpdateAlarm(Alarm alarm) {
+        Alarm foundAlarm = findAlarmById(alarm.getAlarmId());
+
+        if(foundAlarm == null) {
+            addAlarm(alarm);
+        } else {
+            updateAlarm(alarm);
+        }
     }
 
-    public List<Alarm> queryAlarm() {
-        Cursor cursor = mDatabase.query(Tables.MyAlarm.NAME, null, null, null, null, null, null);
+    private void updateAlarm(Alarm alarm) {
+        mDatabase.update(Tables.MyAlarm.NAME, getContentValues(alarm),
+                Tables.MyAlarm.Cols.ALARM_ID + " = ? ", new String[] { alarm.getAlarmId().toString() });
+    }
+
+    public List<Alarm> getList() {
+        return queryAlarm(null, null);
+    }
+
+    public Alarm findAlarmById(UUID uuid) {
+        return queryAlarmSingle(Tables.MyAlarm.Cols.ALARM_ID + " = ? ", new String[]{ uuid.toString() });
+    }
+
+    private List<Alarm> queryAlarm(String selection, String[] selectionArrays) {
+        Cursor cursor = mDatabase.query(Tables.MyAlarm.NAME, null, selection, selectionArrays, null, null, null);
         AlarmCursor alarmCursor = new AlarmCursor(cursor);
         List<Alarm> list = new ArrayList<>();
 
@@ -97,4 +116,18 @@ public class AlarmDatabase {
             return newAlarm;
         }
     }
+
+    private Alarm queryAlarmSingle(String selection, String[] selectionArrays) {
+
+        Cursor cursor = mDatabase.query(Tables.MyAlarm.NAME, null, selection, selectionArrays, null, null, null);
+        AlarmCursor alarmCursor = new AlarmCursor(cursor);
+
+        alarmCursor.moveToFirst();
+        if (!alarmCursor.isAfterLast()) {
+            return alarmCursor.getAlarm();
+        }
+
+        return null;
+    }
+
 }

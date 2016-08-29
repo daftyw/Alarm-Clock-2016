@@ -18,7 +18,6 @@ public class DefaultTimePicker extends DialogFragment {
 
     public DefaultTimePicker() {}
 
-    @NonNull
     public void setOnTimeSetListener(TimePickerDialog.OnTimeSetListener onTimeSetListener) {
         mOnTimeSetListener = onTimeSetListener;
     }
