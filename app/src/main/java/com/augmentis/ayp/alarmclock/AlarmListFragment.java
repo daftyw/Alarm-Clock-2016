@@ -59,7 +59,6 @@ public class AlarmListFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.alarm_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new AlarmAdapter(alarmList));
         return v;
     }
 
@@ -72,6 +71,9 @@ public class AlarmListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        List<Alarm> alarmList = mAlarmDatabase.getList();
+        mRecyclerView.setAdapter(new AlarmAdapter(alarmList));
     }
 
     @Override
@@ -105,6 +107,8 @@ public class AlarmListFragment extends Fragment {
 
         public void bindAlarm(Alarm alarm) {
             mAlarm = alarm;
+            mNameText.setText(alarm.getName());
+            mTimeText.setText(alarm.getHour() + ":" + alarm.getMin());
         }
     }
 
@@ -117,7 +121,8 @@ public class AlarmListFragment extends Fragment {
 
         @Override
         public AlarmHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.item_list_card_alarm, parent);
+            View itemView = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.item_list_card_alarm, parent, false);
 
             return new AlarmHolder(itemView);
         }

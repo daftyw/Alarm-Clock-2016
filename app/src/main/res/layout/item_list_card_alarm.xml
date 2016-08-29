@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:theme="@style/CardView.Light"
     app:cardElevation="2dp"
-    app:contentPadding="@dimen/activity_vertical_margin">
+    app:contentPadding="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
