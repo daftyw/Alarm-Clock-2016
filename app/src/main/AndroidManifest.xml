@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AlarmActivity">
+
+        <activity android:name=".AlarmListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -16,10 +17,9 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".MyAlarmService"
-            android:exported="false">
-        </service>
+        <activity android:name=".AlarmActivity" >
+        </activity>
+
     </application>
 
 </manifest>
